@@ -60,8 +60,8 @@ const settingsMenu = [
   { title: "PM Auto blocker", env_var: "PMB_VAR" },
   { title: "Save status", env_var: "SAVE_STATUS" },
   { title: "Save view once", env_var: "SAVE_VIEW_ONCE" },
-  { title: "Disable bot in PM", env_var: "DIS_PM" },
-  { title: "Disable bot startup message", env_var: "DISABLE_START_MESSAGE" },
+  { title: "Enable bot in PM", env_var: "EN_PM" },
+  { title: "Enable bot startup message", env_var: "ENABLE_START_MESSAGE" },
 ];
 
 const baseConfig = {
@@ -72,7 +72,7 @@ const baseConfig = {
   BLOCK_CHAT: process.env.BLOCK_CHAT || "",
   PM_ANTISPAM: convertToBool(process.env.PM_ANTISPAM) || "",
   ALWAYS_ONLINE: convertToBool(process.env.ALWAYS_ONLINE) || true,
-  MANGLISH_CHATBOT: convertToBool(process.env.MANGLISH_CHATBOT) || false,
+  MANGLISH_CHATBOT: convertToBool(process.env.MANGLISH_CHATBOT) || true,
   ADMIN_ACCESS: convertToBool(process.env.ADMIN_ACCESS) || true,
   PLATFORM: isHeroku
     ? "Heroku"
@@ -105,7 +105,7 @@ const baseConfig = {
   AUTO_READ_STATUS: convertToBool(process.env.AUTO_READ_STATUS) || true,
   READ_MESSAGES: convertToBool(process.env.READ_MESSAGES) || true,
   PMB_VAR: convertToBool(process.env.PMB_VAR) || true,
-  DIS_PM: convertToBool(process.env.DIS_PM) || false,
+  ENABLE_PM: convertToBool(process.env.ENABLE_PM) || true,
   REJECT_CALLS: convertToBool(process.env.REJECT_CALLS) || false,
   ALLOWED_CALLS: process.env.ALLOWED_CALLS || "",
   CALL_REJECT_MESSAGE: process.env.CALL_REJECT_MESSAGE || "",
@@ -284,5 +284,6 @@ Object.defineProperty(config, "debug", {
 });
 
 module.exports = config;
+
 
 
