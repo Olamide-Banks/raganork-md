@@ -6,9 +6,9 @@ function convertToBool(text, fault = "true", fault2 = "on") {
   return text === fault || text === fault2;
 }
 
-const isVPS = !(__dirname.startsWith("/rgnk") || __dirname.startsWith("/skl"));
+const isVPS = !(__dirname.startsWith("/olamide") || __dirname.startsWith("/skl"));
 const isHeroku = __dirname.startsWith("/skl");
-const isKoyeb = __dirname.startsWith("/rgnk");
+const isKoyeb = __dirname.startsWith("/olamide");
 const isRailway = __dirname.startsWith("/railway");
 
 const logger = P({ level: process.env.LOG_LEVEL || "silent" });
@@ -58,6 +58,8 @@ const settingsMenu = [
   { title: "Auto reject calls", env_var: "REJECT_CALLS" },
   { title: "Always online", env_var: "ALWAYS_ONLINE" },
   { title: "PM Auto blocker", env_var: "PMB_VAR" },
+  { title: "Save status", env_var: "SAVE_STATUS" },
+  { title: "Save view once", env_var: "SAVE_VIEW_ONCE" },
   { title: "Disable bot in PM", env_var: "DIS_PM" },
   { title: "Disable bot startup message", env_var: "DISABLE_START_MESSAGE" },
 ];
@@ -115,14 +117,14 @@ const baseConfig = {
     "78c84c62b32a88e86daf87dd509a657a",
   ],
   RG: process.env.RG || "919074309534-1632403322@g.us,120363116963909366@g.us",
-  BOT_INFO: process.env.BOT_INFO || "𝖱𝖺𝗀𝖺𝗇𝗈𝗋𝗄;𝖱𝗒𝗓𝖾𝗇;default",
+  BOT_INFO: process.env.BOT_INFO || "Olamide;𝖱𝗒𝗓𝖾𝗇;default",
   RBG_KEY: process.env.RBG_KEY || "",
   ALLOWED: process.env.ALLOWED || "91,94,2",
   NOT_ALLOWED: process.env.NOT_ALLOWED || "852",
   CHATBOT: process.env.CHATBOT || "off",
   HANDLERS: process.env.HANDLERS || ".,",
-  STICKER_DATA: process.env.STICKER_DATA || "Raganork",
-  BOT_NAME: process.env.BOT_NAME || "Raganork",
+  STICKER_DATA: process.env.STICKER_DATA || "Olamide",
+  BOT_NAME: process.env.BOT_NAME || "Olamide",
   AUDIO_DATA:
     process.env.AUDIO_DATA === undefined || process.env.AUDIO_DATA === "private"
       ? "ꪶ͢٭𝑺𝜣𝑼𝑹𝛢𝑽𝑲𝑳¹¹ꫂ;Raganork MD bot;https://i.imgur.com/P7ziVhr.jpeg"
@@ -282,3 +284,4 @@ Object.defineProperty(config, "debug", {
 });
 
 module.exports = config;
+
