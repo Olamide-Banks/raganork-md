@@ -71,9 +71,9 @@ const baseConfig = {
     "_I am alive! (use .setalive help for custom alive msg)_",
   BLOCK_CHAT: process.env.BLOCK_CHAT || "",
   PM_ANTISPAM: convertToBool(process.env.PM_ANTISPAM) || "",
-  ALWAYS_ONLINE: convertToBool(process.env.ALWAYS_ONLINE) || false,
+  ALWAYS_ONLINE: convertToBool(process.env.ALWAYS_ONLINE) || true,
   MANGLISH_CHATBOT: convertToBool(process.env.MANGLISH_CHATBOT) || false,
-  ADMIN_ACCESS: convertToBool(process.env.ADMIN_ACCESS) || false,
+  ADMIN_ACCESS: convertToBool(process.env.ADMIN_ACCESS) || true,
   PLATFORM: isHeroku
     ? "Heroku"
     : isRailway
@@ -92,24 +92,24 @@ const baseConfig = {
   MULTI_HANDLERS: convertToBool(process.env.MULTI_HANDLERS) || false,
   DISABLE_START_MESSAGE:
     convertToBool(process.env.DISABLE_START_MESSAGE) || false,
-  NOLOG: process.env.NOLOG || false,
-  DISABLED_COMMANDS:
-    (process.env.DISABLED_COMMANDS
-      ? process.env.DISABLED_COMMANDS.split(",")
+  NOLOG: process.env.NOLOG || true,
+  ENABLED_COMMANDS:
+    (process.env.ENABLED_COMMANDS
+      ? process.env.ENABLED_COMMANDS.split(",")
       : undefined) || [],
   ANTI_BOT: process.env.ANTI_BOT || "",
   ANTISPAM_COUNT: process.env.ANTISPAM_COUNT || "6/10",
   AUTOUNMUTE_MSG:
     process.env.AUTOUNMUTE_MSG ||
     "_Group auto unmuted!_\n_(edit AUTOUNMUTE_MSG)_",
-  AUTO_READ_STATUS: convertToBool(process.env.AUTO_READ_STATUS) || false,
-  READ_MESSAGES: convertToBool(process.env.READ_MESSAGES) || false,
-  PMB_VAR: convertToBool(process.env.PMB_VAR) || false,
+  AUTO_READ_STATUS: convertToBool(process.env.AUTO_READ_STATUS) || true,
+  READ_MESSAGES: convertToBool(process.env.READ_MESSAGES) || true,
+  PMB_VAR: convertToBool(process.env.PMB_VAR) || true,
   DIS_PM: convertToBool(process.env.DIS_PM) || false,
   REJECT_CALLS: convertToBool(process.env.REJECT_CALLS) || false,
   ALLOWED_CALLS: process.env.ALLOWED_CALLS || "",
   CALL_REJECT_MESSAGE: process.env.CALL_REJECT_MESSAGE || "",
-  PMB: process.env.PMB || "_Personal messages not allowed, BLOCKED!_",
+  PMB: process.env.PMB || "_Personal messages allowed, UNBLOCKED!_",
   READ_COMMAND: convertToBool(process.env.READ_COMMAND) || true,
   IMGBB_KEY: [
     "76a050f031972d9f27e329d767dd988f",
@@ -121,7 +121,7 @@ const baseConfig = {
   RBG_KEY: process.env.RBG_KEY || "",
   ALLOWED: process.env.ALLOWED || "91,94,2",
   NOT_ALLOWED: process.env.NOT_ALLOWED || "852",
-  CHATBOT: process.env.CHATBOT || "off",
+  CHATBOT: process.env.CHATBOT || "on",
   HANDLERS: process.env.HANDLERS || ".,",
   STICKER_DATA: process.env.STICKER_DATA || "Olamide",
   BOT_NAME: process.env.BOT_NAME || "Olamide",
@@ -130,11 +130,11 @@ const baseConfig = {
       ? "ꪶ͢٭𝑺𝜣𝑼𝑹𝛢𝑽𝑲𝑳¹¹ꫂ;Raganork MD bot;https://i.imgur.com/P7ziVhr.jpeg"
       : process.env.AUDIO_DATA,
   TAKE_KEY: process.env.TAKE_KEY || "",
-  CMD_REACTION: convertToBool(process.env.CMD_REACTION) || false,
+  CMD_REACTION: convertToBool(process.env.CMD_REACTION) || true,
   MODE: process.env.MODE || "private",
   WARN: process.env.WARN || "4",
   ANTILINK_WARN: process.env.ANTILINK_WARN || "",
-  ANTI_DELETE: convertToBool(process.env.ANTI_DELETE) || false,
+  ANTI_DELETE: convertToBool(process.env.ANTI_DELETE) || true,
   SUDO: process.env.SUDO || "",
   LANGUAGE: process.env.LANGUAGE || "english",
   ACR_A: "ff489a0160188cf5f0750eaf486eee74",
@@ -284,4 +284,5 @@ Object.defineProperty(config, "debug", {
 });
 
 module.exports = config;
+
 
