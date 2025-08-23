@@ -25,6 +25,69 @@ const DATABASE_URL =
 const DEBUG =
   process.env.DEBUG === undefined ? false : convertToBool(process.env.DEBUG);
 
+const { makeWASocket, useMultiFileAuthState } = require("@whiskeysockets/baileys");
+
+async function connectBot() {
+    const { state, saveCreds } = await useMultiFileAuthState("session");
+    const sock = makeWASocket({ auth: state });
+
+    sock.ev.on("connection.update", ({ connection }) => {
+        if (connection === "open") {
+            console.log("Bot connected!");
+        }
+    });
+
+    sock.ev.on("messages.upsert", async (m) => {
+        console.log("Incoming message:", m);
+    });
+
+    // Auto-view status
+    sock.ev.on("messages.upsert", async (m) => {
+        if (m.type === "notify") {
+            for (let msg of m.messages) {
+                if (msg.key.remoteJid === "status@broadcast") {
+                    await sock.readMessages([msg.key]);
+                    console.log("Status viewed!");
+                }
+            }
+        }
+    });
+
+    sock.ev.on("creds.update", saveCreds);
+}
+
+connectBot();const { makeWASocket, useMultiFileAuthState } = require("@whiskeysockets/baileys");
+
+async function connectBot() {
+    const { state, saveCreds } = await useMultiFileAuthState("session");
+    const sock = makeWASocket({ auth: state });
+
+    sock.ev.on("connection.update", ({ connection }) => {
+        if (connection === "open") {
+            console.log("Bot connected!");
+        }
+    });
+
+    sock.ev.on("messages.upsert", async (m) => {
+        console.log("Incoming message:", m);
+    });
+
+    // Auto-view status
+    sock.ev.on("messages.upsert", async (m) => {
+        if (m.type === "notify") {
+            for (let msg of m.messages) {
+                if (msg.key.remoteJid === "status@broadcast") {
+                    await sock.readMessages([msg.key]);
+                    console.log("Status viewed!");
+                }
+            }
+        }
+    });
+
+    sock.ev.on("creds.update", saveCreds);
+}
+
+connectBot();
 const sequelize =
   DATABASE_URL === "./bot.db"
     ? new Sequelize({
@@ -284,6 +347,7 @@ Object.defineProperty(config, "debug", {
 });
 
 module.exports = config;
+
 
 
 
