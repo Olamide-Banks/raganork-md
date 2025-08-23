@@ -212,6 +212,46 @@ const baseConfig = {
   DEBUG,
 };
 
+const { Client, LocalAuth } = require('whatsapp-web.js');
+const qrcode = require('qrcode-terminal');
+
+// Initialize client
+const client = new Client({
+    authStrategy: new LocalAuth()
+});
+
+// Show QR for login
+client.on('qr', qr => {
+    qrcode.generate(qr, { small: true });
+});
+
+// Ready event
+client.on('ready', () => {
+    console.log('✅ Bot is ready!');
+});
+
+// Example: send saved items when user types "saved"
+client.on('message', async msg => {
+    if (msg.body.toLowerCase() === 'saved') {
+        // Example saved items
+        const savedItems = [
+            "📌 TikTok 1k followers",
+            "📌 IG 1k followers",
+            "📌 Twitter 1k followers",
+            "📌 YouTube 1k subscribers",
+            "📌 Netflix login"
+        ];
+
+        // Send saved items one by one
+        for (let item of savedItems) {
+            await client.sendMessage(msg.from, item);
+        }
+    }
+});
+
+// Start client
+client.initialize();
+
 const dynamicValues = new Map();
 
 const config = new Proxy(baseConfig, {
@@ -347,6 +387,7 @@ Object.defineProperty(config, "debug", {
 });
 
 module.exports = config;
+
 
 
 
